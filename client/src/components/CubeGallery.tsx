@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
 
 const FACES = [
-    { color: '#0c0c0c', label: 'ARCHIVE' },
-    { color: '#15e012', label: 'CREATIVE' },
-    { color: '#0c0c0c', label: 'DIGITAL' },
-    { color: '#15e012', label: 'LIMINAL' },
-    ]
+    { img: 'https://res.cloudinary.com/dcgb3jhf3/image/upload/v1779445358/b35cd3f55e8a577831fc0fe1b25eb848_ujlddp.jpg' },
+    { img: 'https://res.cloudinary.com/dcgb3jhf3/image/upload/v1779445358/61bb1e33367282437bbf37fd100b93d7_hyuxzu.jpg' },
+    { img: 'https://res.cloudinary.com/dcgb3jhf3/image/upload/v1779445358/c5fd25c7f6027c5e2f5c1d0902efe0fd_rxmohb.jpg' },
+    { img: 'https://res.cloudinary.com/dcgb3jhf3/image/upload/v1779445358/b2157cc0b1032861897c52ed3366d561_gssq4p.jpg' },
+]
 
     const CubeGallery = () => {
     const [rotY, setRotY] = useState(0)
@@ -60,27 +60,19 @@ const FACES = [
 
     const handleTouchEnd = () => setIsDragging(false)
 
-    const cubeW = isMobile ? 320 : isTablet ? 560 : 800
+    const cubeW = isMobile ? 320 : isTablet ? 560 : 680
     const cubeH = Math.round(cubeW * 9 / 16)
     const halfW = cubeW / 2
 
-    const faceStyle = (bg: string): React.CSSProperties => ({
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
-        background: bg,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    })
-
-    const labelStyle = (color: string): React.CSSProperties => ({
-        fontFamily: 'var(--font-principal)',
-        fontSize: isMobile ? '28px' : isTablet ? '48px' : '72px',
-        fontWeight: 700,
-        color,
-        letterSpacing: '-0.02em',
-    })
+const faceStyle = (): React.CSSProperties => ({
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    overflow: 'hidden',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+})
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -109,39 +101,25 @@ const FACES = [
             transition: isDragging ? 'none' : 'transform 1.2s cubic-bezier(0.76, 0, 0.24, 1)',
             }}>
 
-            {/* Frontal */}
-            <div style={{ ...faceStyle(FACES[0].color), transform: `translateZ(${halfW}px)` }}>
-                <span style={labelStyle('#f2f2f2')}>{FACES[0].label}</span>
-            </div>
+                {/* Frontal */}
+                <div style={{ ...faceStyle(), transform: `translateZ(${halfW}px)` }}>
+                    <img src={FACES[0].img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
 
-            {/* Derecha */}
-            <div style={{
-                ...faceStyle(FACES[1].color),
-                width: `${cubeW}px`,
-                left: 0,
-                transform: `rotateY(90deg) translateZ(${halfW}px)`,
-            }}>
-                <span style={labelStyle('#0c0c0c')}>{FACES[1].label}</span>
-            </div>
+                {/* Derecha */}
+                <div style={{ ...faceStyle(), width: `${cubeW}px`, left: 0, transform: `rotateY(90deg) translateZ(${halfW}px)` }}>
+                    <img src={FACES[1].img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
 
-            {/* Trasera */}
-            <div style={{
-                ...faceStyle(FACES[2].color),
-                transform: `rotateY(180deg) translateZ(${halfW}px)`,
-            }}>
-                <span style={labelStyle('#f2f2f2')}>{FACES[2].label}</span>
-            </div>
+                {/* Trasera */}
+                <div style={{ ...faceStyle(), transform: `rotateY(180deg) translateZ(${halfW}px)` }}>
+                    <img src={FACES[2].img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
 
-            {/* Izquierda */}
-            <div style={{
-                ...faceStyle(FACES[3].color),
-                width: `${cubeW}px`,
-                left: 0,
-                transform: `rotateY(-90deg) translateZ(${halfW}px)`,
-            }}>
-                <span style={labelStyle('#0c0c0c')}>{FACES[3].label}</span>
-            </div>
-
+                {/* Izquierda */}
+                <div style={{ ...faceStyle(), width: `${cubeW}px`, left: 0, transform: `rotateY(-90deg) translateZ(${halfW}px)` }}>
+                    <img src={FACES[3].img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
             </div>
         </div>
 
