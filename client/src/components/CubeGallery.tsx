@@ -103,22 +103,22 @@ const faceStyle = (): React.CSSProperties => ({
 
                 {/* Frontal */}
                 <div style={{ ...faceStyle(), transform: `translateZ(${halfW}px)` }}>
-                    <img src={FACES[0].img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={FACES[0].img} alt="" onDragStart={e => e.preventDefault()} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
 
                 {/* Derecha */}
                 <div style={{ ...faceStyle(), width: `${cubeW}px`, left: 0, transform: `rotateY(90deg) translateZ(${halfW}px)` }}>
-                    <img src={FACES[1].img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={FACES[1].img} alt="" onDragStart={e => e.preventDefault()} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
 
                 {/* Trasera */}
                 <div style={{ ...faceStyle(), transform: `rotateY(180deg) translateZ(${halfW}px)` }}>
-                    <img src={FACES[2].img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={FACES[2].img} alt="" onDragStart={e => e.preventDefault()} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
 
                 {/* Izquierda */}
                 <div style={{ ...faceStyle(), width: `${cubeW}px`, left: 0, transform: `rotateY(-90deg) translateZ(${halfW}px)` }}>
-                    <img src={FACES[3].img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={FACES[3].img} alt="" onDragStart={e => e.preventDefault()} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
             </div>
         </div>
