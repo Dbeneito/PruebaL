@@ -5,7 +5,8 @@ import {
     createProject,
     updateProject,
     deleteProject,
-    likeProject
+    likeProject,
+    addComment
 } from '../controllers/projects.controller';
 import { authMiddleware } from '../middleware/auth.middleware';
 
@@ -17,5 +18,6 @@ router.post('/', authMiddleware, createProject);
 router.put('/:id', authMiddleware, updateProject);
 router.delete('/:id', authMiddleware, deleteProject);
 router.post('/:id/like', authMiddleware, likeProject);
+router.post('/:id/comments', authMiddleware, addComment);
 
 export default router;

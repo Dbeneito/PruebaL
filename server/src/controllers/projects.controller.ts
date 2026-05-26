@@ -248,3 +248,26 @@ export const getProjects = async (req: Request, res: Response): Promise<void> =>
         res.status(500).json({ message: 'Error interno del servidor' });
     }
     };
+
+    export const addComment = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const userId = (req as any).user.id
+            const { id } = req.params
+            const { content } = req.body
+
+            if (!content?.trim()) {
+            res.status(400).json({ message: 'El comentario no puede estar vacío' })
+            return
+            }
+
+            await pool.query(
+            'INSERT INTO comments (project_id, author_id, content) VALUES (?, ?, ?)',
+            [id, userId, content]
+            )
+
+            res.status(201).json({ message: 'Comentario añadido' })
+        } catch (error) {
+            console.error(error)
+            res.status(500).json({ message: 'Error interno del servidor' })
+        }
+    }

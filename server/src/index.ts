@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.routes';
 import projectRoutes from './routes/projects.routes';
 import userRoutes from './routes/users.routes';
+import referentRoutes from './routes/referents.routes'
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/referents', referentRoutes)
 
 // Health check
 app.get('/api/health', (req, res) => {
