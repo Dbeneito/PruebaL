@@ -9,7 +9,7 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <Navbar />
-        <div style={{ paddingTop: '52px', paddingBottom: '32px' }}>
+        <div style={{ paddingTop: '10px', paddingBottom: '32px' }}>
           <AppRouter />
         </div>
         <StatusBar />

@@ -88,7 +88,7 @@ const FloatingWindows = () => {
             border: '1px solid #888',
           }}
         >
-          {/* Barra superior estilo Mac OS clásico */}
+          {/* Barra superior */}
           <div
             onMouseDown={(e) => handleMouseDown(e, win.id)}
             style={{
@@ -102,86 +102,25 @@ const FloatingWindows = () => {
               position: 'relative',
             }}
           >
-            {/* Botones Mac */}
             <button
               onClick={() => closeWindow(win.id)}
-              style={{
-                width: '13px',
-                height: '13px',
-                borderRadius: '50%',
-                background: 'radial-gradient(circle at 40% 35%, #ff6b6b, #cc1100)',
-                border: '1px solid #aa0000',
-                cursor: 'pointer',
-                padding: 0,
-                flexShrink: 0,
-                boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.4)',
-              }}
+              style={{ width: '13px', height: '13px', borderRadius: '50%', background: 'radial-gradient(circle at 40% 35%, #ff6b6b, #cc1100)', border: '1px solid #aa0000', cursor: 'pointer', padding: 0, flexShrink: 0, boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.4)' }}
             />
-            <div style={{
-              width: '13px',
-              height: '13px',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle at 40% 35%, #ffdd57, #e6a800)',
-              border: '1px solid #cc8800',
-              flexShrink: 0,
-              boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.4)',
-            }} />
-            <div style={{
-              width: '13px',
-              height: '13px',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle at 40% 35%, #69db7c, #15e012)',
-              border: '1px solid #0a9e08',
-              flexShrink: 0,
-              boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.4)',
-            }} />
-
-            {/* Título centrado */}
-            <span style={{
-              position: 'absolute',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              fontFamily: 'var(--font-secundaria)',
-              fontSize: '10px',
-              color: '#333',
-              letterSpacing: '0.05em',
-              fontWeight: 600,
-              whiteSpace: 'nowrap',
-            }}>
+            <div style={{ width: '13px', height: '13px', borderRadius: '50%', background: 'radial-gradient(circle at 40% 35%, #ffdd57, #e6a800)', border: '1px solid #cc8800', flexShrink: 0, boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.4)' }} />
+            <div style={{ width: '13px', height: '13px', borderRadius: '50%', background: 'radial-gradient(circle at 40% 35%, #69db7c, #15e012)', border: '1px solid #0a9e08', flexShrink: 0, boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.4)' }} />
+            <span style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', fontFamily: 'var(--font-secundaria)', fontSize: '10px', color: '#333', letterSpacing: '0.05em', fontWeight: 600, whiteSpace: 'nowrap' }}>
               {win.title}
             </span>
           </div>
 
           {/* Imagen */}
-          <div style={{
-            width: '100%',
-            height: `${Math.round(win.width * 0.6)}px`,
-            overflow: 'hidden',
-            background: '#fff',
-          }}>
-            <img
-              src={win.img}
-              alt={win.title}
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              draggable={false}
-            />
+          <div style={{ width: '100%', height: `${Math.round(win.width * 0.6)}px`, overflow: 'hidden', background: '#fff' }}>
+            <img src={win.img} alt={win.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} draggable={false} />
           </div>
 
-          {/* Barra inferior estilo Mac */}
-          <div style={{
-            background: 'linear-gradient(to bottom, #d0d0d0, #b8b8b8)',
-            padding: '3px 8px',
-            borderTop: '1px solid #999',
-            display: 'flex',
-            justifyContent: 'flex-end',
-          }}>
-            <div style={{
-              width: '10px',
-              height: '10px',
-              backgroundImage: 'radial-gradient(circle, #999 1px, transparent 1px)',
-              backgroundSize: '3px 3px',
-              opacity: 0.6,
-            }} />
+          {/* Barra inferior */}
+          <div style={{ background: 'linear-gradient(to bottom, #d0d0d0, #b8b8b8)', padding: '3px 8px', borderTop: '1px solid #999', display: 'flex', justifyContent: 'flex-end' }}>
+            <div style={{ width: '10px', height: '10px', backgroundImage: 'radial-gradient(circle, #999 1px, transparent 1px)', backgroundSize: '3px 3px', opacity: 0.6 }} />
           </div>
         </div>
       ))}

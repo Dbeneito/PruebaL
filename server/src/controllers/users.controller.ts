@@ -7,12 +7,12 @@ export const getUserProfile = async (req: Request, res: Response): Promise<void>
         const { username } = req.params;
 
         const [users]: any = await pool.query(
-        'SELECT id, username, avatar_url, bio, created_at FROM users WHERE username = ?',
-        [username]
-        );
+            'SELECT id, username, avatar_url, bio, discipline, location, birth_year, created_at FROM users WHERE username = ?',
+            [username]
+        )
 
         if (users.length === 0) {
-        res.status(404).json({ message: 'Usuario no encontrado' });
+            res.status(404).json({ message: 'Usuario no encontrado' });
         return;
         }
 
@@ -32,13 +32,13 @@ export const getUserProfile = async (req: Request, res: Response): Promise<void>
 
         // Conteo seguidores y siguiendo
         const [followers]: any = await pool.query(
-        'SELECT COUNT(*) as count FROM follows WHERE following_id = ?',
-        [user.id]
+            'SELECT COUNT(*) as count FROM follows WHERE following_id = ?',
+            [user.id]
         );
 
         const [following]: any = await pool.query(
-        'SELECT COUNT(*) as count FROM follows WHERE follower_id = ?',
-        [user.id]
+            'SELECT COUNT(*) as count FROM follows WHERE follower_id = ?',
+            [user.id]
         );
 
         res.json({
@@ -61,8 +61,8 @@ export const getUserProfile = async (req: Request, res: Response): Promise<void>
         const { bio, avatar_url } = req.body;
 
         await pool.query(
-        'UPDATE users SET bio = ?, avatar_url = ? WHERE id = ?',
-        [bio, avatar_url, userId]
+            'UPDATE users SET bio = ?, avatar_url = ? WHERE id = ?',
+            [bio, avatar_url, userId]
         );
 
         res.json({ message: 'Perfil actualizado correctamente' });

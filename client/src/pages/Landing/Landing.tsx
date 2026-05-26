@@ -22,7 +22,7 @@ const Landing = () => {
   }, [])
 
   return (
-    <div className="w-full bg-[var(--blanco)] overflow-x-hidden relative">
+    <div className="w-full bg-[var(--blanco)] mt-12 overflow-x-hidden relative">
 
       {/* SECCIÓN 1 — HERO */}
       <div className={`
@@ -38,7 +38,7 @@ const Landing = () => {
         <p className="font-[var(--font-secundaria)] text-[22px] text-black tracking-[-0.12em] text-center mt-12 opacity-90 max-w-[600px] relative z-30">
           El único archivo que realmente importa.
         </p>
-        <Button>Entrar / Registrarse</Button>
+        <Button href="/registro">Entrar / Registrarse</Button>
       </div>
 
       {/* SECCIÓN 2 — BIO EDITORIAL */}
@@ -96,9 +96,9 @@ const Landing = () => {
       </div>
 
       {/* SECCIÓN 4 — REFERENTES */}
-      <div className="w-full border-t border-[var(--negro)] relative z-10">
+      <div className="w-full  relative z-10">
 
-        <div className={`flex justify-between items-end border-b border-black/[0.08] ${isSmall ? 'px-6 py-10 pb-6' : 'px-20 py-16 pb-10'}`}>
+        <div className={`flex justify-between items-end ${isSmall ? 'px-6 py-10 pb-6' : 'px-20 py-16 pb-10'}`}>
           <span className={`font-[var(--font-principal)] font-bold text-[var(--negro)] tracking-[-0.02em] uppercase leading-none ${isSmall ? 'text-[32px]' : 'text-[56px]'}`}>
             REFERENTES
           </span>

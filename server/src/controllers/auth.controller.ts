@@ -5,57 +5,53 @@ import jwt from 'jsonwebtoken';
 
 // REGISTRO
 export const register = async (req: Request, res: Response): Promise<void> => {
-    const { email, username, password } = req.body;
+    const { email, username, password, discipline, location, birth_year } = req.body
 
     if (!email || !username || !password) {
-        res.status(400).json({ message: 'Todos los campos son obligatorios' });
-        return;
+    res.status(400).json({ message: 'Todos los campos son obligatorios' })
+    return
     }
 
     try {
-        // Comprobar si el email o username ya existen
-        const [existing]: any = await pool.query(
+    const [existing]: any = await pool.query(
         'SELECT id FROM users WHERE email = ? OR username = ?',
         [email, username]
-        );
+    )
 
-        if (existing.length > 0) {
-        res.status(409).json({ message: 'Email o username ya en uso' });
-        return;
-        }
+    if (existing.length > 0) {
+        res.status(409).json({ message: 'Email o username ya en uso' })
+        return
+    }
 
-        // Hashear contraseña
-        const password_hash = await bcrypt.hash(password, 10);
+    const password_hash = await bcrypt.hash(password, 10)
 
-        // Insertar usuario
-        const [result]: any = await pool.query(
-        'INSERT INTO users (email, username, password_hash) VALUES (?, ?, ?)',
-        [email, username, password_hash]
-        );
+    const [result]: any = await pool.query(
+        'INSERT INTO users (email, username, password_hash, discipline, location, birth_year) VALUES (?, ?, ?, ?, ?, ?)',
+        [email, username, password_hash, discipline || null, location || null, birth_year || null]
+    )
 
-        // Generar token
-        const token = jwt.sign(
+    const token = jwt.sign(
         { id: result.insertId, username, role: 'user' },
         process.env.JWT_SECRET as string,
         { expiresIn: '7d' }
-        );
+    )
 
-        res.status(201).json({
+    res.status(201).json({
         message: 'Usuario creado correctamente',
         token,
         user: {
-            id: result.insertId,
-            email,
-            username,
-            role: 'user'
+        id: result.insertId,
+        email,
+        username,
+        role: 'user'
         }
-        });
+    })
 
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error interno del servidor' });
+    console.error(error)
+    res.status(500).json({ message: 'Error interno del servidor' })
     }
-    };
+}
 
     // LOGIN
     export const login = async (req: Request, res: Response): Promise<void> => {
@@ -120,12 +116,12 @@ export const register = async (req: Request, res: Response): Promise<void> => {
         const userId = (req as any).user.id;
 
         const [users]: any = await pool.query(
-        'SELECT id, email, username, avatar_url, bio, role, created_at FROM users WHERE id = ?',
-        [userId]
-        );
+            'SELECT id, email, username, avatar_url, bio, role, discipline, location, birth_year, created_at FROM users WHERE id = ?',
+            [userId]
+        )
 
         if (users.length === 0) {
-        res.status(404).json({ message: 'Usuario no encontrado' });
+            res.status(404).json({ message: 'Usuario no encontrado' });
         return;
         }
 

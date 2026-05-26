@@ -9,7 +9,6 @@ import Perfil from '../pages/Perfil/Perfil'
 import Referentes from '../pages/Referentes/Referentes'
 import Comunidad from '../pages/Comunidad/Comunidad'
 import Login from '../pages/Login/Login'
-import Registro from '../pages/Registro/Registro'
 import Dashboard from '../pages/Dashboard/Dashboard'
 import Publicar from '../pages/Publicar/Publicar'
 import Admin from '../pages/Admin/Admin'
@@ -34,7 +33,7 @@ const AppRouter = () => {
         <Route path="/referentes" element={<Referentes />} />
         <Route path="/comunidad" element={<Comunidad />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/registro" element={<Registro />} />
+        <Route path="/registro" element={<Login />} />
         <Route path="/dashboard" element={
             <PrivateRoute><Dashboard /></PrivateRoute>
         } />
