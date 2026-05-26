@@ -121,7 +121,7 @@ const Navbar = () => {
   const linkBaseStyle: React.CSSProperties = {
     fontFamily: 'var(--font-principal)',
     fontSize: isMobile
-      ? 'clamp(72px, 22vw, 120px)'
+      ? 'clamp(100px, 22vw, 120px)'
       : isTablet
       ? 'clamp(100px, 18vw, 180px)'
       : 'clamp(140px, 15vw, 300px)',
@@ -226,7 +226,7 @@ const Navbar = () => {
         {/* Arriba izquierda — selector idioma */}
         <div style={{
           position: 'absolute',
-          top: isMobile ? '20px' : '32px',
+          top: isMobile ? '100px' : '32px',
           left: isMobile ? '20px' : '32px',
           display: 'flex',
           gap: '8px',
@@ -264,7 +264,7 @@ const Navbar = () => {
             onClick={() => setMenuOpen(false)}
             style={{
               position: 'absolute',
-              top: isMobile ? '16px' : '28px',
+              top: isMobile ? '100px' : '28px',
               right: isMobile ? '20px' : '32px',
               fontFamily: 'var(--font-secundaria)',
               fontSize: isMobile ? '10px' : '14px',
@@ -283,7 +283,7 @@ const Navbar = () => {
             onClick={handleLogout}
             style={{
               position: 'absolute',
-              top: isMobile ? '16px' : '28px',
+              top: isMobile ? '100px' : '28px',
               right: isMobile ? '20px' : '32px',
               fontFamily: 'var(--font-secundaria)',
               fontSize: isMobile ? '10px' : '14px',

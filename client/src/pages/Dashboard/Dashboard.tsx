@@ -504,7 +504,7 @@ const Dashboard = () => {
         padding: isMobile ? '90px 16px 60px' : '100px 24px 60px',
         boxSizing: 'border-box',
         }}>
-        <MacWindow title={`LIMINAL — Dashboard @${user?.username}`} width="100%">
+        <MacWindow title={`LIMINAL —  @${user?.username}`} width="100%">
             <div style={{ margin: '-24px' }}>
 
             {isSmall && (

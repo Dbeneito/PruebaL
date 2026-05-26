@@ -7,6 +7,7 @@ import Archivo from '../pages/Archivo/Archivo'
 import Proyecto from '../pages/Proyecto/Proyecto'
 import Perfil from '../pages/Perfil/Perfil'
 import Referentes from '../pages/Referentes/Referentes'
+import ReferenteDetalle from '../pages/Referentes/ReferentesDetalle'
 import Comunidad from '../pages/Comunidad/Comunidad'
 import Login from '../pages/Login/Login'
 import Dashboard from '../pages/Dashboard/Dashboard'
@@ -31,6 +32,7 @@ const AppRouter = () => {
         <Route path="/proyecto/:id" element={<Proyecto />} />
         <Route path="/perfil/:username" element={<Perfil />} />
         <Route path="/referentes" element={<Referentes />} />
+        <Route path="/referentes/:slug" element={<ReferenteDetalle />} />
         <Route path="/comunidad" element={<Comunidad />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Login />} />
