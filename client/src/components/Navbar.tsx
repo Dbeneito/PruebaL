@@ -33,7 +33,7 @@ const Navbar = () => {
     { label: t('archivo'), path: '/archivo' },
     { label: t('referentes'), path: '/referentes' },
     { label: t('comunidad'), path: '/comunidad' },
-    { label: t('about'), path: '/about' },
+    { label: t('about'), path: '/' },
   ]
 
   useEffect(() => {
@@ -330,19 +330,37 @@ const Navbar = () => {
           ))}
 
           {isAuthenticated && (
-            <Link
-              to="/dashboard"
-              onClick={() => setMenuOpen(false)}
-              style={{
-                ...linkBaseStyle,
-                fontSize: isMobile ? 'clamp(28px, 8vw, 48px)' : 'clamp(40px, 8vw, 100px)',
-                opacity: 0.5,
-              }}
-              onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
-              onMouseLeave={e => (e.currentTarget.style.opacity = '0.5')}
-            >
-              {user?.username?.toUpperCase()}
-            </Link>
+            <>
+              <Link
+                to="/dashboard"
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  ...linkBaseStyle,
+                  fontSize: isMobile ? 'clamp(28px, 8vw, 48px)' : 'clamp(40px, 8vw, 100px)',
+                  opacity: 0.5,
+                }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
+                onMouseLeave={e => (e.currentTarget.style.opacity = '0.5')}
+              >
+                {user?.username?.toUpperCase()}
+              </Link>
+
+              {(user as any)?.role === 'admin' && (
+                <Link
+                  to="/admin"
+                  onClick={() => setMenuOpen(false)}
+                  style={{
+                    ...linkBaseStyle,
+                    fontSize: isMobile ? 'clamp(20px, 6vw, 36px)' : 'clamp(28px, 5vw, 64px)',
+                    opacity: 0.35,
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.opacity = '0.8')}
+                  onMouseLeave={e => (e.currentTarget.style.opacity = '0.35')}
+                >
+                  ADMIN
+                </Link>
+              )}
+            </>
           )}
         </div>
 

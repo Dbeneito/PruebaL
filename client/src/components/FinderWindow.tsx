@@ -1,45 +1,19 @@
 import { useState, useEffect } from 'react'
-import MacWindow from './MacWindows'
-import ProjectCard from './ProjectCard'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import MacWindow from './MacWindows'
 
-const CATEGORIES = [
-    { label: 'Diseño_Gráfico' },
-    { label: 'Moda' },
-    { label: 'Arquitectura' },
-    { label: 'Tipografía' },
-    { label: 'Motion' },
-    { label: 'Fotografía' },
-    ]
+interface Project {
+    id: number
+    title: string
+    cover_url: string
+}
 
-    const PROJECTS = [
-    { id: 1,  title: 'Identidad visual',   img: 'https://picsum.photos/seed/p1/400/300'  },
-    { id: 2,  title: 'Colección SS26',     img: 'https://picsum.photos/seed/p2/400/300'  },
-    { id: 3,  title: 'Pabellón efímero',   img: 'https://picsum.photos/seed/p3/400/300'  },
-    { id: 4,  title: 'Typeface Grau',      img: 'https://picsum.photos/seed/p4/400/300'  },
-    { id: 5,  title: 'Branding editorial', img: 'https://picsum.photos/seed/p5/400/300'  },
-    { id: 6,  title: 'Fragmentos',         img: 'https://picsum.photos/seed/p6/400/300'  },
-    { id: 7,  title: 'Serie documental',   img: 'https://picsum.photos/seed/p7/400/300'  },
-    { id: 8,  title: 'Zine post modern',   img: 'https://picsum.photos/seed/p8/400/300'  },
-    { id: 9,  title: 'Cartel soviético',   img: 'https://picsum.photos/seed/p9/400/300'  },
-    { id: 10, title: 'Sistema señalética', img: 'https://picsum.photos/seed/p10/400/300' },
-    { id: 11, title: 'Packaging minimal',  img: 'https://picsum.photos/seed/p11/400/300' },
-    { id: 12, title: 'Ilustración urbana', img: 'https://picsum.photos/seed/p12/400/300' },
-    ]
+const toFileName = (title: string) =>
+    title.trim().replace(/\s+/g, '_') + '.jpg'
 
-    const CategoryButton = ({
-    label, active, onClick, className = '',
-    }: { label: string; active: boolean; onClick: () => void; className?: string }) => (
-    <button
-        onClick={onClick}
-        className={`font-[var(--font-secundaria)] tracking-wide cursor-pointer border-none ${active ? 'bg-gradient-to-b from-[#4dff4a] to-[#15e012] text-[#1a4d19]' : 'bg-black/[0.06] text-[#333]'} ${className}`}
-    >
-        {label}
-    </button>
-    )
-
-    const FinderWindow = () => {
-    const [activeCategory, setActiveCategory] = useState('Diseño_Gráfico')
+const FinderWindow = () => {
+    const [projects, setProjects] = useState<Project[]>([])
     const [isSmall, setIsSmall] = useState(window.innerWidth <= 768)
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 480)
 
@@ -52,8 +26,15 @@ const CATEGORIES = [
         return () => window.removeEventListener('resize', handleResize)
     }, [])
 
-    return (
-        <MacWindow
+    useEffect(() => {
+        axios
+        .get('http://localhost:3000/api/projects')
+        .then(res => setProjects(res.data))
+        .catch(() => {})
+    }, [])
+
+return (
+    <MacWindow
         title="LIMINAL — Archivo"
         width="100%"
         rightAction={
@@ -74,54 +55,150 @@ const CATEGORIES = [
         }
         >
         <div style={{ margin: '-24px' }}>
-
-            {/* Categorías móvil/tablet */}
-            {isSmall && (
-            <div className="bg-gradient-to-r from-[#e0e0e0] to-[#e8e8e8] border-b border-[#ccc] flex overflow-x-auto px-3 py-2 gap-1.5 [scrollbar-width:none]">
-                {CATEGORIES.map(cat => (
-                <CategoryButton
-                    key={cat.label}
-                    label={cat.label}
-                    active={activeCategory === cat.label}
-                    onClick={() => setActiveCategory(cat.label)}
-                    className="shrink-0 px-3 py-1 text-[10px] rounded"
-                />
-                ))}
-            </div>
-            )}
-
+            
             {/* Cuerpo */}
-            <div className={`grid bg-[#f0f0f0] ${isSmall ? 'grid-cols-1 min-h-[320px]' : 'grid-cols-[180px_1fr] min-h-[480px]'}`}>
-
-            {/* Sidebar escritorio */}
-            {!isSmall && (
-                <div className="border-r border-[#ccc] bg-gradient-to-r from-[#e0e0e0] to-[#e8e8e8] py-3">
-                <p className="font-[var(--font-secundaria)] text-[10px] text-[#888] tracking-[0.1em] uppercase px-4 mb-2">
-                    Categorías
-                </p>
-                {CATEGORIES.map(cat => (
-                    <CategoryButton
-                    key={cat.label}
-                    label={cat.label}
-                    active={activeCategory === cat.label}
-                    onClick={() => setActiveCategory(cat.label)}
-                    className={`w-full text-left px-4 py-1.5 text-[11px] block ${activeCategory === cat.label ? 'rounded mx-1 !w-[calc(100%-8px)]' : 'rounded-none'}`}
-                    />
-                ))}
-                </div>
-            )}
-
+            <div
+            className={`grid bg-[#f0f0f0] ${
+                isSmall
+                ? 'grid-cols-1 min-h-[320px]'
+                : 'grid-cols-1 min-h-[480px]'
+            }`}
+            >
             {/* Grid proyectos */}
-            <div className={`bg-[#f5f5f5] overflow-y-auto grid content-start ${isSmall ? 'p-3 gap-2 max-h-[320px] grid-cols-2' : 'p-5 gap-3 max-h-[480px] grid-cols-6'}`}>
-                {PROJECTS.map(project => (
-                <ProjectCard key={project.id} {...project} isMobile={isMobile} />
-                ))}
+            <div
+                className={`bg-[#f5f5f5] overflow-y-auto grid content-start ${
+                isSmall
+                    ? 'p-3 gap-2 max-h-[320px] grid-cols-2'
+                    : 'p-5 gap-3 max-h-[480px] grid-cols-6'
+                }`}
+            >
+                {projects.length > 0 ? (
+                projects.map(project => (
+                    <Link
+                    key={project.id}
+                    to={`/proyecto/${project.id}`}
+                    style={{
+                        textDecoration: 'none',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: isMobile ? '6px 2px' : '8px 4px',
+                        transition: 'background 0.15s',
+                        cursor: 'pointer',
+                    }}
+                    onMouseEnter={e =>
+                        (e.currentTarget.style.background =
+                        'rgba(0, 255, 26, 0.34)')
+                    }
+                    onMouseLeave={e =>
+                        (e.currentTarget.style.background = 'transparent')
+                    }
+                    >
+                    <div
+                        style={{
+                        width: '100%',
+                        aspectRatio: '4/3',
+                        borderRadius: '4px',
+                        overflow: 'hidden',
+                        border: '1px solid rgba(0,0,0,0.15)',
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.12)',
+                        }}
+                    >
+                        <img
+                        src={
+                            project.cover_url ||
+                            `https://picsum.photos/seed/${project.id}/400/300`
+                        }
+                        alt={project.title}
+                        draggable={false}
+                        onDragStart={e => e.preventDefault()}
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            border: '5px solid white',
+                        }}
+                        />
+                    </div>
+                    <p
+                        style={{
+                        fontFamily: 'var(--font-secundaria)',
+                        fontSize: isMobile ? '9px' : '10px',
+                        color: '#222',
+                        fontWeight: 500,
+                        letterSpacing: '0.02em',
+                        margin: 0,
+                        textAlign: 'center',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        width: '100%',
+                        }}
+                    >
+                        {toFileName(project.title)}
+                    </p>
+                    </Link>
+                ))
+                ) : (
+                <div
+                    style={{
+                    gridColumn: '1 / -1',
+                    padding: '32px',
+                    textAlign: 'center',
+                    }}
+                >
+                    <p
+                    style={{
+                        fontFamily: 'var(--font-secundaria)',
+                        fontSize: '11px',
+                        color: '#888',
+                        letterSpacing: '0.1em',
+                        textTransform: 'uppercase',
+                        margin: 0,
+                    }}
+                    >
+                    Sin proyectos
+                    </p>
+                </div>
+                )}
+            </div>
             </div>
 
+            {/* Barra inferior */}
+            <div
+            style={{
+                background: 'linear-gradient(to bottom, #d0d0d0, #b8b8b8)',
+                padding: '4px 16px',
+                borderTop: '1px solid #999',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+            }}
+            >
+            <span
+                style={{
+                fontFamily: 'var(--font-secundaria)',
+                fontSize: '10px',
+                color: '#555',
+                letterSpacing: '0.05em',
+                }}
+            >
+                {projects.length} proyectos
+            </span>
+            <div
+                style={{
+                width: '10px',
+                height: '10px',
+                backgroundImage:
+                    'radial-gradient(circle, #999 1px, transparent 1px)',
+                backgroundSize: '3px 3px',
+                opacity: 0.6,
+                }}
+            />
             </div>
-
         </div>
-        </MacWindow>
+    </MacWindow>
     )
 }
 

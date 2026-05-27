@@ -54,27 +54,38 @@ export const getUserProfile = async (req: Request, res: Response): Promise<void>
     }
     };
 
+    export const getAllUsers = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const [users]: any = await pool.query(
+            'SELECT id, username, email, role, created_at FROM users ORDER BY created_at DESC'
+            )
+            res.json(users)
+        } catch (error) {
+            console.error(error)
+            res.status(500).json({ message: 'Error interno del servidor' })
+        }
+    };
+
     // PUT actualizar perfil propio
-    export const updateProfile = async (req: Request, res: Response): Promise<void> => {
+export const updateProfile = async (req: Request, res: Response): Promise<void> => {
     try {
-        const userId = (req as any).user.id;
-        const { bio, avatar_url } = req.body;
+        const userId = (req as any).user.id
+        const { bio, avatar_url, discipline, location } = req.body
 
         await pool.query(
-            'UPDATE users SET bio = ?, avatar_url = ? WHERE id = ?',
-            [bio, avatar_url, userId]
-        );
+        'UPDATE users SET bio = ?, avatar_url = ?, discipline = ?, location = ? WHERE id = ?',
+        [bio || null, avatar_url || null, discipline || null, location || null, userId]
+        )
 
-        res.json({ message: 'Perfil actualizado correctamente' });
-
+        res.json({ message: 'Perfil actualizado correctamente' })
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error interno del servidor' });
+        console.error(error)
+        res.status(500).json({ message: 'Error interno del servidor' })
     }
     };
 
     // POST seguir / dejar de seguir usuario
-    export const toggleFollow = async (req: Request, res: Response): Promise<void> => {
+export const toggleFollow = async (req: Request, res: Response): Promise<void> => {
     try {
         const followerId = (req as any).user.id;
         const { id } = req.params;
@@ -110,7 +121,7 @@ export const getUserProfile = async (req: Request, res: Response): Promise<void>
     };
 
     // GET usuarios destacados
-    export const getFeaturedUsers = async (req: Request, res: Response): Promise<void> => {
+export const getFeaturedUsers = async (req: Request, res: Response): Promise<void> => {
     try {
         const [users]: any = await pool.query(`
         SELECT 
@@ -134,7 +145,7 @@ export const getUserProfile = async (req: Request, res: Response): Promise<void>
     };
 
     // GET proyectos guardados del usuario
-    export const getSavedProjects = async (req: Request, res: Response): Promise<void> => {
+export const getSavedProjects = async (req: Request, res: Response): Promise<void> => {
     try {
         const userId = (req as any).user.id;
 
@@ -161,7 +172,7 @@ export const getUserProfile = async (req: Request, res: Response): Promise<void>
     };
 
     // POST guardar / quitar proyecto de favoritos
-    export const toggleFavorite = async (req: Request, res: Response): Promise<void> => {
+export const toggleFavorite = async (req: Request, res: Response): Promise<void> => {
     try {
         const userId = (req as any).user.id;
         const { id } = req.params;

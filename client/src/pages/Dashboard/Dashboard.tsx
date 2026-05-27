@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useAuth } from '../../context/AuthContext'
 import MacWindow from '../../components/MacWindows'
 import Button from '../../components/Button'
+import CloudinaryUpload from '../../components/CloudinaryUpload'
 
 type Section = 'resumen' | 'proyectos' | 'nolikes' | 'publicar' | 'ajustes'
 
@@ -304,144 +305,145 @@ const Dashboard = () => {
 
         case 'publicar':
             return (
-            <form onSubmit={handlePublish} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <form onSubmit={handlePublish} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+
                 <div>
-                <label style={labelStyle}>Título del proyecto</label>
-                <input
+                    <label style={labelStyle}>Título del proyecto</label>
+                    <input
                     type="text"
                     placeholder="Mi proyecto"
                     value={publishForm.title}
-                    onChange={e => setPublishForm({ ...publishForm, title: e.target.value })}
+                    onChange={e => setPublishForm(prev => ({ ...prev, title: e.target.value }))}
                     style={inputStyle}
                     required
-                />
+                    />
                 </div>
 
                 <div>
-                <label style={labelStyle}>Descripción</label>
-                <textarea
+                    <label style={labelStyle}>Descripción</label>
+                    <textarea
                     placeholder="Describe tu proyecto..."
                     value={publishForm.description}
-                    onChange={e => setPublishForm({ ...publishForm, description: e.target.value })}
+                    onChange={e => setPublishForm(prev => ({ ...prev, description: e.target.value }))}
                     rows={4}
                     style={{ ...inputStyle, borderRadius: '4px', resize: 'vertical' }}
-                />
+                    />
                 </div>
 
                 <div>
-                <label style={labelStyle}>URL de imagen de portada</label>
-                <input
-                    type="url"
-                    placeholder="https://..."
-                    value={publishForm.cover_url}
-                    onChange={e => setPublishForm({ ...publishForm, cover_url: e.target.value })}
-                    style={inputStyle}
-                />
-                {publishForm.cover_url && (
-                    <div style={{ marginTop: '8px', width: '100%', aspectRatio: '16/9', overflow: 'hidden', borderRadius: '4px', border: '1px solid #ccc' }}>
-                    <img src={publishForm.cover_url} alt="preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <label style={labelStyle}>Imagen de portada</label>
+                    {publishForm.cover_url && (
+                    <div style={{ marginBottom: '8px', width: '100%', aspectRatio: '16/9', overflow: 'hidden', borderRadius: '4px', border: '1px solid #ccc' }}>
+                        <img src={publishForm.cover_url} alt="preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </div>
-                )}
+                    )}
+                    <CloudinaryUpload
+                    onUpload={(url) => setPublishForm(prev => ({ ...prev, cover_url: url }))}
+                    label="Seleccionar imagen"
+                    />
                 </div>
 
                 <div>
-                <label style={labelStyle}>Categorías</label>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                    <label style={labelStyle}>Categorías</label>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                     {categories.map(cat => (
-                    <CategoryButton
+                        <CategoryButton
                         key={cat.id}
                         id={cat.id}
                         label={cat.name}
                         active={publishForm.categories.includes(cat.id)}
                         onClick={() => {
-                        const already = publishForm.categories.includes(cat.id)
-                        setPublishForm(prev => ({
+                            const already = publishForm.categories.includes(cat.id)
+                            setPublishForm(prev => ({
                             ...prev,
                             categories: already
-                            ? prev.categories.filter(id => id !== cat.id)
-                            : [...prev.categories, cat.id]
-                        }))
+                                ? prev.categories.filter(id => id !== cat.id)
+                                : [...prev.categories, cat.id]
+                            }))
                         }}
-                    />
+                        />
                     ))}
-                </div>
+                    </div>
                 </div>
 
                 <div>
-                <label style={labelStyle}>Estado</label>
-                <div style={{ display: 'flex', gap: '8px' }}>
+                    <label style={labelStyle}>Estado</label>
+                    <div style={{ display: 'flex', gap: '8px' }}>
                     {['published', 'draft'].map(s => (
-                    <button
+                        <button
                         key={s}
                         type="button"
-                        onClick={() => setPublishForm({ ...publishForm, status: s })}
+                        onClick={() => setPublishForm(prev => ({ ...prev, status: s }))}
                         style={{
-                        padding: '5px 16px',
-                        fontFamily: 'var(--font-secundaria)',
-                        fontSize: '11px',
-                        color: publishForm.status === s ? '#1a4d19' : '#333',
-                        background: publishForm.status === s
+                            padding: '5px 16px',
+                            fontFamily: 'var(--font-secundaria)',
+                            fontSize: '11px',
+                            color: publishForm.status === s ? '#1a4d19' : '#333',
+                            background: publishForm.status === s
                             ? 'linear-gradient(to bottom, #4dff4a, #15e012)'
                             : 'rgba(0,0,0,0.06)',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        letterSpacing: '0.05em',
-                        textTransform: 'uppercase',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            letterSpacing: '0.05em',
+                            textTransform: 'uppercase',
                         }}
-                    >
+                        >
                         {s === 'published' ? 'Publicar' : 'Borrador'}
-                    </button>
+                        </button>
                     ))}
-                </div>
+                    </div>
                 </div>
 
                 {publishMsg && (
-                <p style={{ fontFamily: 'var(--font-secundaria)', fontSize: '11px', color: publishMsg.includes('Error') ? '#cc1100' : '#15e012', margin: 0 }}>
+                    <p style={{ fontFamily: 'var(--font-secundaria)', fontSize: '11px', color: publishMsg.includes('Error') ? '#cc1100' : '#15e012', margin: 0 }}>
                     {publishMsg}
-                </p>
+                    </p>
                 )}
 
                 <div style={{ height: '1px', background: '#ccc' }} />
-                {/* Verde — texto negro */}
+
                 <Button size="sm" color="#15e012" shadowColor="21,224,18" textColor="var(--negro)">
-                Publicar proyecto
+                    Publicar proyecto
                 </Button>
-            </form>
+                </form>
             )
 
         case 'ajustes':
             return (
-            <form onSubmit={handleAjustes} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <form onSubmit={handleAjustes} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+
                 <div>
-                <label style={labelStyle}>Avatar URL</label>
-                <input
-                    type="url"
-                    placeholder="https://..."
-                    value={ajustesForm.avatar_url}
-                    onChange={e => setAjustesForm({ ...ajustesForm, avatar_url: e.target.value })}
-                    style={inputStyle}
-                />
+                    <label style={labelStyle}>Avatar</label>
+                    {ajustesForm.avatar_url && (
+                    <div style={{ marginBottom: '8px', width: '64px', height: '64px', borderRadius: '50%', overflow: 'hidden', border: '2px solid #ccc' }}>
+                        <img src={ajustesForm.avatar_url} alt="avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </div>
+                    )}
+                    <CloudinaryUpload
+                    onUpload={(url) => setAjustesForm(prev => ({ ...prev, avatar_url: url }))}
+                    label="Cambiar avatar"
+                    />
                 </div>
 
                 <div>
-                <label style={labelStyle}>Bio</label>
-                <textarea
+                    <label style={labelStyle}>Bio</label>
+                    <textarea
                     placeholder="Cuéntanos algo sobre ti..."
                     value={ajustesForm.bio}
-                    onChange={e => setAjustesForm({ ...ajustesForm, bio: e.target.value })}
+                    onChange={e => setAjustesForm(prev => ({ ...prev, bio: e.target.value }))}
                     rows={3}
                     style={{ ...inputStyle, borderRadius: '4px', resize: 'vertical' }}
-                />
+                    />
                 </div>
 
                 <div>
-                <label style={labelStyle}>Disciplina</label>
-                <select
+                    <label style={labelStyle}>Disciplina</label>
+                    <select
                     value={ajustesForm.discipline}
-                    onChange={e => setAjustesForm({ ...ajustesForm, discipline: e.target.value })}
+                    onChange={e => setAjustesForm(prev => ({ ...prev, discipline: e.target.value }))}
                     style={{ ...inputStyle }}
-                >
+                    >
                     <option value="">Selecciona una disciplina</option>
                     <option>Diseño Gráfico</option>
                     <option>Moda</option>
@@ -453,42 +455,41 @@ const Dashboard = () => {
                     <option>Branding</option>
                     <option>Arte</option>
                     <option>Otro</option>
-                </select>
+                    </select>
                 </div>
 
                 <div>
-                <label style={labelStyle}>Ubicación</label>
-                <input
+                    <label style={labelStyle}>Ubicación</label>
+                    <input
                     type="text"
                     placeholder="Ciudad, País"
                     value={ajustesForm.location}
-                    onChange={e => setAjustesForm({ ...ajustesForm, location: e.target.value })}
+                    onChange={e => setAjustesForm(prev => ({ ...prev, location: e.target.value }))}
                     style={inputStyle}
-                />
+                    />
                 </div>
 
                 {ajustesMsg && (
-                <p style={{ fontFamily: 'var(--font-secundaria)', fontSize: '11px', color: ajustesMsg.includes('Error') ? '#cc1100' : '#15e012', margin: 0 }}>
+                    <p style={{ fontFamily: 'var(--font-secundaria)', fontSize: '11px', color: ajustesMsg.includes('Error') ? '#cc1100' : '#15e012', margin: 0 }}>
                     {ajustesMsg}
-                </p>
+                    </p>
                 )}
 
                 <div style={{ height: '1px', background: '#ccc' }} />
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                {/* Verde — texto negro */}
-                <Button size="sm" color="#15e012" shadowColor="21,224,18" textColor="var(--negro)">
+                    <Button size="sm" color="#15e012" shadowColor="21,224,18" textColor="var(--negro)">
                     Guardar cambios
-                </Button>
-                <button
+                    </Button>
+                    <button
                     type="button"
                     onClick={() => { logout(); navigate('/') }}
                     style={{ fontFamily: 'var(--font-secundaria)', fontSize: '11px', color: '#cc1100', background: 'none', border: 'none', cursor: 'pointer', letterSpacing: '0.05em', textTransform: 'uppercase' }}
-                >
+                    >
                     Cerrar sesión
-                </button>
+                    </button>
                 </div>
-            </form>
+                </form>
             )
 
         default:

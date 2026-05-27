@@ -293,12 +293,6 @@ const ReferenteDetalle = () => {
                 </div>
               ))}
             </div>
-
-            {/* Derecha */}
-            <div style={{ position: 'absolute', right: '16px', display: 'flex', gap: '16px' }}>
-              <span style={{ fontFamily: 'var(--font-secundaria)', fontSize: '11px', color: '#555', letterSpacing: '0.05em' }}>LIMINAL</span>
-              <span style={{ fontFamily: 'var(--font-secundaria)', fontSize: '11px', color: '#555', letterSpacing: '0.05em' }}>Archivo</span>
-            </div>
           </div>
 
           {/* Cuerpo */}

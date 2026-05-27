@@ -12,9 +12,9 @@ interface FloatWindow {
 }
 
 const INITIAL_WINDOWS: Omit<FloatWindow, 'visible' | 'zIndex'>[] = [
-  { id: 1, title: 'LMN_001', img: 'https://picsum.photos/seed/w1/400/300', x: 12, y: 6, width: 360 },
-  { id: 2, title: 'LMN_002', img: 'https://picsum.photos/seed/w2/400/300', x: 66, y: 16, width: 280 },
-  { id: 3, title: 'LMN_003', img: 'https://picsum.photos/seed/w3/400/300', x: 10, y: 62, width: 300 },
+  { id: 1, title: 'LMN_001', img: 'https://res.cloudinary.com/dcgb3jhf3/image/upload/v1779898212/ecc13c31acc94c435f38f5d218b01564_bvssyb.jpg', x: 12, y: 6, width: 360 },
+  { id: 2, title: 'LMN_002', img: 'https://res.cloudinary.com/dcgb3jhf3/image/upload/v1779898335/1efda23ac88f9343d5bd8d46039ab96b_tosrlo.jpg', x: 66, y: 16, width: 280 },
+  { id: 3, title: 'LMN_003', img: 'https://res.cloudinary.com/dcgb3jhf3/image/upload/v1779898197/b4015dc611c095397feba246ebfea9f9_k5w60z.jpg', x: 10, y: 62, width: 300 },
 ]
 
 const FloatingWindows = () => {

@@ -91,14 +91,14 @@ const Landing = () => {
       </div>
 
       {/* SECCIÓN 3 — FINDER WINDOW */}
-      <div className={`w-full border-t border-[var(--negro)] relative z-10 ${isSmall ? 'px-6 py-16' : 'px-20 py-24'}`}>
+      <div className={`w-full  border-t border-[var(--negro)] relative z-10 ${isSmall ? 'px-6 py-16' : 'px-20 py-24'}`}>
         <FinderWindow />
       </div>
 
       {/* SECCIÓN 4 — REFERENTES */}
       <div className="w-full  relative z-10">
 
-        <div className={`flex justify-between items-end ${isSmall ? 'px-6 py-10 pb-6' : 'px-20 py-16 pb-10'}`}>
+        <div className={`flex justify-between items-end ${isSmall ? 'px-6 py-10 pb-6 gap-5' : 'px-20 py-16 pb-10'}`}>
           <span className={`font-[var(--font-principal)] font-bold text-[var(--negro)] tracking-[-0.02em] uppercase leading-none ${isSmall ? 'text-[32px]' : 'text-[56px]'}`}>
             REFERENTES
           </span>

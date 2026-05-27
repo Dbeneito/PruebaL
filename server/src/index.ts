@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.routes';
 import projectRoutes from './routes/projects.routes';
 import userRoutes from './routes/users.routes';
 import referentRoutes from './routes/referents.routes'
+import categoryRoutes from './routes/categories.routes'
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/referents', referentRoutes)
+app.use('/api/categories', categoryRoutes)
 
 // Health check
 app.get('/api/health', (req, res) => {

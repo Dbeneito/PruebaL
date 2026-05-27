@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 
 const FACES = [
-    { img: 'https://res.cloudinary.com/dcgb3jhf3/image/upload/v1779445358/b35cd3f55e8a577831fc0fe1b25eb848_ujlddp.jpg' },
-    { img: 'https://res.cloudinary.com/dcgb3jhf3/image/upload/v1779445358/61bb1e33367282437bbf37fd100b93d7_hyuxzu.jpg' },
-    { img: 'https://res.cloudinary.com/dcgb3jhf3/image/upload/v1779445358/c5fd25c7f6027c5e2f5c1d0902efe0fd_rxmohb.jpg' },
-    { img: 'https://res.cloudinary.com/dcgb3jhf3/image/upload/v1779445358/b2157cc0b1032861897c52ed3366d561_gssq4p.jpg' },
+    { img: 'https://res.cloudinary.com/dcgb3jhf3/image/upload/v1779897859/6f85dbe7c517fab54090b9192b7cb257_zhcynh.jpg' },
+    { img: 'https://res.cloudinary.com/dcgb3jhf3/image/upload/v1779897859/d205016030fa64567f934a4b5fdd01bf_h8il7r.jpg' },
+    { img: 'https://res.cloudinary.com/dcgb3jhf3/image/upload/v1779897859/727479e2ad5e21e8199957946acb15a8_ghlwsp.jpg' },
+    { img: 'https://res.cloudinary.com/dcgb3jhf3/image/upload/v1779897859/4141e6ca51130ad8ec937d2396950c44_hwg0ra.jpg' },
 ]
 
     const CubeGallery = () => {

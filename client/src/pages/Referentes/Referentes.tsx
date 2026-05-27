@@ -12,6 +12,9 @@ interface Referent {
     death_year: number | null
 }
 
+// Rotaciones predefinidas para que no sean caóticas
+const ROTATIONS = [-3, 2, -5, 4, -2, 6, -4, 3, -6, 2, -3, 5]
+
 const Referentes = () => {
     const [referents, setReferents] = useState<Referent[]>([])
     const [loading, setLoading] = useState(true)
@@ -36,7 +39,7 @@ const Referentes = () => {
         .catch(() => setLoading(false))
     }, [])
 
-    const folderSize = isMobile ? 60 : isTablet ? 72 : 90
+    const folderSize = isMobile ? 64 : isTablet ? 80 : 100
 
     return (
         <div style={{
@@ -48,7 +51,16 @@ const Referentes = () => {
         }}>
 
         {/* Header */}
-        <div style={{ marginBottom: '60px', borderBottom: '1px solid var(--negro)', paddingBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+        <div style={{
+            marginBottom: '60px',
+            borderBottom: '1px solid var(--negro)',
+            paddingBottom: '24px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end',
+            flexWrap: 'wrap',
+            gap: '12px',
+        }}>
             <div>
             <h1 style={{
                 fontFamily: 'var(--font-principal)',
@@ -69,6 +81,7 @@ const Referentes = () => {
                 letterSpacing: '0.15em',
                 textTransform: 'uppercase',
                 marginTop: '12px',
+                marginBottom: 0,
             }}>
                 Creativos que han marcado la historia del diseño
             </p>
@@ -94,19 +107,30 @@ const Referentes = () => {
             <div style={{
             display: 'grid',
             gridTemplateColumns: isMobile
-                ? 'repeat(3, 1fr)'
+                ? 'repeat(2, 1fr)'
                 : isTablet
-                ? 'repeat(4, 1fr)'
-                : 'repeat(6, 1fr)',
-            gap: isMobile ? '16px' : '24px',
+                ? 'repeat(3, 1fr)'
+                : 'repeat(5, 1fr)',
+            gap: isMobile ? '24px 16px' : '48px 24px',
+            padding: isMobile ? '16px 0' : '32px 0',
             }}>
-            {referents.map(ref => (
-                <FolderIcon
+            {referents.map((ref, i) => (
+                <div
                 key={ref.slug}
-                name={ref.name.replace(' ', '_')}
-                slug={ref.slug}
-                size={folderSize}
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    paddingTop: i % 2 === 1 ? (isMobile ? '16px' : '32px') : '0',
+                }}
+                >
+                <FolderIcon
+                    name={ref.name.replace(/ /g, '_')}
+                    slug={ref.slug}
+                    size={folderSize}
+                    rotation={ROTATIONS[i % ROTATIONS.length]}
+                    shadow
                 />
+                </div>
             ))}
             </div>
         )}

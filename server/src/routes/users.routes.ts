@@ -1,16 +1,18 @@
 import { Router } from 'express';
 import {
     getUserProfile,
+    getAllUsers,
     updateProfile,
     toggleFollow,
     getFeaturedUsers,
     getSavedProjects,
     toggleFavorite
 } from '../controllers/users.controller';
-import { authMiddleware } from '../middleware/auth.middleware';
+import { adminMiddleware, authMiddleware, } from '../middleware/auth.middleware';
 
 const router = Router();
 
+router.get('/', authMiddleware, adminMiddleware, getAllUsers);
 router.get('/featured', getFeaturedUsers);
 router.get('/:username', getUserProfile);
 router.put('/profile', authMiddleware, updateProfile);
