@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useAuth } from '../../context/AuthContext'
+import { API_URL } from '../../config/api'
 
 interface Project {
   id: number
@@ -31,7 +32,7 @@ const Archivo = () => {
   }, [])
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/projects')
+    axios.get(`${API_URL}/api/projects`)
       .then(res => {
         setProjects(res.data)
         if (res.data.length > 0) setSelected(res.data[0])
@@ -54,7 +55,7 @@ const Archivo = () => {
   const handleLike = async () => {
     if (!token || !selected) return
     try {
-      await axios.post(`http://localhost:3000/api/projects/${selected.id}/like`, {}, {
+      await axios.post(`${API_URL}/api/projects/${selected.id}/like`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setLiked(!liked)

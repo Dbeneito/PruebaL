@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useAuth } from '../../context/AuthContext'
 import MacWindow from '../../components/MacWindows'
 import Button from '../../components/Button'
+import { API_URL } from '../../config/api'
 
 type Section = 'stats' | 'usuarios' | 'proyectos' | 'referentes' | 'categorias'
 
@@ -56,10 +57,10 @@ const Admin = () => {
   useEffect(() => {
     if (!ready || !token) return
     const headers = { Authorization: `Bearer ${token}` }
-    axios.get('http://localhost:3000/api/users', { headers }).then(res => setUsers(res.data)).catch(() => {})
-    axios.get('http://localhost:3000/api/projects').then(res => setProjects(res.data)).catch(() => {})
-    axios.get('http://localhost:3000/api/referents').then(res => setReferents(res.data)).catch(() => {})
-    axios.get('http://localhost:3000/api/categories').then(res => setCategories(res.data)).catch(() => {})
+    axios.get(`${API_URL}/api/users`, { headers }).then(res => setUsers(res.data)).catch(() => {})
+    axios.get(`${API_URL}/api/projects`).then(res => setProjects(res.data)).catch(() => {})
+    axios.get(`${API_URL}/api/referents`).then(res => setReferents(res.data)).catch(() => {})
+    axios.get(`${API_URL}/api/categories`).then(res => setCategories(res.data)).catch(() => {})
   }, [ready, token])
 
   useEffect(() => {
@@ -78,7 +79,7 @@ const Admin = () => {
   const handleDeleteUser = async (id: number) => {
     if (!confirm('¿Eliminar este usuario?')) return
     try {
-      await axios.delete(`http://localhost:3000/api/users/${id}`, { headers })
+      await axios.delete(`${API_URL}/api/users/${id}`, { headers })
       setUsers(prev => prev.filter(u => u.id !== id))
     } catch { setMsg('Error al eliminar usuario') }
   }
@@ -86,7 +87,7 @@ const Admin = () => {
   const handleDeleteProject = async (id: number) => {
     if (!confirm('¿Eliminar este proyecto?')) return
     try {
-      await axios.delete(`http://localhost:3000/api/projects/${id}`, { headers })
+      await axios.delete(`${API_URL}/api/projects/${id}`, { headers })
       setProjects(prev => prev.filter(p => p.id !== id))
     } catch { setMsg('Error al eliminar proyecto') }
   }
@@ -94,7 +95,7 @@ const Admin = () => {
   const handleDeleteReferent = async (id: number) => {
     if (!confirm('¿Eliminar este referente?')) return
     try {
-      await axios.delete(`http://localhost:3000/api/referents/${id}`, { headers })
+      await axios.delete(`${API_URL}/api/referents/${id}`, { headers })
       setReferents(prev => prev.filter(r => r.id !== id))
     } catch { setMsg('Error al eliminar referente') }
   }
@@ -102,7 +103,7 @@ const Admin = () => {
   const handleDeleteCategory = async (id: number) => {
     if (!confirm('¿Eliminar esta categoría?')) return
     try {
-      await axios.delete(`http://localhost:3000/api/categories/${id}`, { headers })
+      await axios.delete(`${API_URL}/api/categories/${id}`, { headers })
       setCategories(prev => prev.filter(c => c.id !== id))
     } catch { setMsg('Error al eliminar categoría') }
   }
@@ -111,14 +112,14 @@ const Admin = () => {
     e.preventDefault()
     setMsg('')
     try {
-      await axios.post('http://localhost:3000/api/referents', {
+      await axios.post(`${API_URL}/api/referents`, {
         ...refForm,
         birth_year: refForm.birth_year ? parseInt(refForm.birth_year) : null,
         death_year: refForm.death_year ? parseInt(refForm.death_year) : null,
       }, { headers })
       setMsg('Referente creado correctamente')
       setRefForm({ name: '', slug: '', discipline: '', origin_country: '', birth_year: '', death_year: '', bio: '', cover_url: '', quote: '' })
-      axios.get('http://localhost:3000/api/referents').then(res => setReferents(res.data)).catch(() => {})
+      axios.get(`${API_URL}/api/referents`).then(res => setReferents(res.data)).catch(() => {})
     } catch { setMsg('Error al crear referente') }
   }
 
@@ -126,10 +127,10 @@ const Admin = () => {
     e.preventDefault()
     setMsg('')
     try {
-      await axios.post('http://localhost:3000/api/categories', catForm, { headers })
+      await axios.post(`${API_URL}/api/categories`, catForm, { headers })
       setMsg('Categoría creada correctamente')
       setCatForm({ name: '', slug: '' })
-      axios.get('http://localhost:3000/api/categories').then(res => setCategories(res.data)).catch(() => {})
+      axios.get(`${API_URL}/api/categories`).then(res => setCategories(res.data)).catch(() => {})
     } catch { setMsg('Error al crear categoría') }
   }
 

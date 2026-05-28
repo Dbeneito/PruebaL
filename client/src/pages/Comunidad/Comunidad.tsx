@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import Button from '../../components/Button'
+import { API_URL } from '../../config/api'
 
 interface Project {
     id: number
@@ -42,11 +43,11 @@ const Comunidad = () => {
     }, [])
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/projects')
+        axios.get(`${API_URL}/api/projects`)
         .then(res => setProjects(res.data))
         .catch(() => {})
 
-        axios.get('http://localhost:3000/api/users/featured')
+        axios.get(`${API_URL}/api/users/featured`)
         .then(res => {
             setCreators(res.data)
             if (res.data.length > 0) setSelectedCreator(res.data[0])

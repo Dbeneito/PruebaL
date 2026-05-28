@@ -4,6 +4,7 @@ import axios from 'axios'
 import MacWindow from '../../components/MacWindows'
 import Button from '../../components/Button'
 import { useAuth } from '../../context/AuthContext'
+import { API_URL } from '../../config/api'
 
 interface Project {
   id: number
@@ -48,7 +49,7 @@ const Perfil = () => {
   useEffect(() => {
     if (!username) return
     setLoading(true)
-    axios.get(`http://localhost:3000/api/users/${username}`)
+    axios.get(`${API_URL}/api/users/${username}`)
       .then(res => {
         setUser(res.data)
         setLoading(false)
@@ -62,7 +63,7 @@ const Perfil = () => {
   const handleFollow = async () => {
     if (!token || !user) return
     try {
-      await axios.post(`http://localhost:3000/api/users/${user.id}/follow`, {}, {
+      await axios.post(`${API_URL}/api/users/${user.id}/follow`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setFollowing(!following)

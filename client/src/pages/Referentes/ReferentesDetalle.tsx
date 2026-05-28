@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Button from '../../components/Button'
+import { API_URL } from '../../config/api'
 
 type Tab = 'perfil' | 'biografia' | 'obras'
 
@@ -35,7 +36,7 @@ const ReferenteDetalle = () => {
 
   useEffect(() => {
     if (!slug) return
-    axios.get(`http://localhost:3000/api/referents/${slug}`)
+    axios.get(`${API_URL}/api/referents/${slug}`)
       .then(res => { setReferent(res.data); setLoading(false) })
       .catch(() => { setError('Referente no encontrado'); setLoading(false) })
   }, [slug])

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import FolderIcon from './FolderIcon'
+import { API_URL } from '../config/api'
 
 interface Referent {
     id: number
@@ -22,7 +23,7 @@ const ReferentesDesktop = () => {
     const [referents, setReferents] = useState<Referent[]>([])
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/referents')
+        axios.get(`${API_URL}/api/referents`)
         .then(res => setReferents(res.data.slice(0, 5)))
         .catch(() => {})
     }, [])

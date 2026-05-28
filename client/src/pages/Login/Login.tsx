@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useAuth } from '../../context/AuthContext'
 import MacWindow from '../../components/MacWindows'
 import Button from '../../components/Button'
+import { API_URL } from '../../config/api'
 
 type Tab = 'login' | 'registro'
 
@@ -29,7 +30,7 @@ const Login = () => {
     setError('')
     setLoading(true)
     try {
-      const res = await axios.post('http://localhost:3000/api/auth/login', loginForm)
+      const res = await axios.post(`${API_URL}/api/auth/login`, loginForm)
       login(res.data.token, res.data.user)
       navigate('/dashboard')
     } catch (err: any) {
@@ -52,7 +53,7 @@ const Login = () => {
     }
     setLoading(true)
     try {
-      const res = await axios.post('http://localhost:3000/api/auth/register', {
+      const res = await axios.post(`${API_URL}/api/auth/register`, {
         email: regForm.email,
         username: regForm.username,
         password: regForm.password,

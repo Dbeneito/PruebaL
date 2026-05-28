@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useAuth } from '../../context/AuthContext'
 import MacWindow from '../../components/MacWindows'
 import Button from '../../components/Button'
+import { API_URL } from '../../config/api'
 
 interface Comment {
   id: number
@@ -50,7 +51,7 @@ const Proyecto = () => {
   useEffect(() => {
     if (!id) return
     setLoading(true)
-    axios.get(`http://localhost:3000/api/projects/${id}`)
+    axios.get(`${API_URL}/api/projects/${id}`)
       .then(res => {
         setProject(res.data)
         setLoading(false)
@@ -64,7 +65,7 @@ const Proyecto = () => {
   const handleLike = async () => {
     if (!token || !project) return
     try {
-      await axios.post(`http://localhost:3000/api/projects/${project.id}/like`, {}, {
+      await axios.post(`${API_URL}/api/projects/${project.id}/like`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setLiked(!liked)
@@ -80,7 +81,7 @@ const Proyecto = () => {
     if (!token || !project || !comment.trim()) return
     setSubmitting(true)
     try {
-      await axios.post(`http://localhost:3000/api/projects/${project.id}/comments`, { content: comment }, {
+      await axios.post(`${API_URL}/api/projects/${project.id}/comments`, { content: comment }, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setProject(prev => prev ? {

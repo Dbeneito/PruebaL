@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import MacWindow from './MacWindows'
+import { API_URL } from '../config/api'
 
 interface Project {
     id: number
@@ -28,7 +29,7 @@ const FinderWindow = () => {
 
     useEffect(() => {
         axios
-        .get('http://localhost:3000/api/projects')
+        .get(`${API_URL}/api/projects`)
         .then(res => setProjects(res.data))
         .catch(() => {})
     }, [])

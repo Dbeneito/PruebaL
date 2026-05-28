@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext'
 import MacWindow from '../../components/MacWindows'
 import Button from '../../components/Button'
 import CloudinaryUpload from '../../components/CloudinaryUpload'
+import { API_URL } from '../../config/api'
 
 type Section = 'resumen' | 'proyectos' | 'nolikes' | 'publicar' | 'ajustes'
 
@@ -46,7 +47,7 @@ const Dashboard = () => {
     useEffect(() => {
         if (!token || !user) return
 
-        axios.get(`http://localhost:3000/api/users/${user.username}`)
+        axios.get(`${API_URL}/api/users/${user.username}`)
         .then(res => {
             setProjects(res.data.projects || [])
             setStats({
@@ -63,13 +64,13 @@ const Dashboard = () => {
         })
         .catch(() => {})
 
-        axios.get('http://localhost:3000/api/users/saved', {
+        axios.get(`${API_URL}/api/users/saved`, {
         headers: { Authorization: `Bearer ${token}` }
         })
         .then(res => setLikedProjects(res.data))
         .catch(() => {})
 
-        axios.get('http://localhost:3000/api/categories')
+        axios.get(`${API_URL}/api/categories`)
         .then(res => setCategories(res.data))
         .catch(() => {})
     }, [token, user])
@@ -78,7 +79,7 @@ const Dashboard = () => {
         e.preventDefault()
         setPublishMsg('')
         try {
-        await axios.post('http://localhost:3000/api/projects', publishForm, {
+        await axios.post(`${API_URL}/api/projects`, publishForm, {
             headers: { Authorization: `Bearer ${token}` }
         })
         setPublishMsg('Proyecto publicado correctamente')
@@ -92,7 +93,7 @@ const Dashboard = () => {
         e.preventDefault()
         setAjustesMsg('')
         try {
-        await axios.put('http://localhost:3000/api/users/profile', ajustesForm, {
+        await axios.put(`${API_URL}/api/users/profile`, ajustesForm, {
             headers: { Authorization: `Bearer ${token}` }
         })
         setAjustesMsg('Perfil actualizado correctamente')
@@ -104,7 +105,7 @@ const Dashboard = () => {
     const handleDeleteProject = async (id: number) => {
         if (!confirm('¿Eliminar este proyecto?')) return
         try {
-        await axios.delete(`http://localhost:3000/api/projects/${id}`, {
+        await axios.delete(`${API_URL}/api/projects/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         setProjects(prev => prev.filter(p => p.id !== id))
