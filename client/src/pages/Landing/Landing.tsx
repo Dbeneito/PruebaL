@@ -4,15 +4,17 @@ import FloatingWindows from '../../components/FloatingWindows'
 import Button from '../../components/Button'
 import FinderWindow from '../../components/FinderWindow'
 import ReferentesDesktop from '../../components/ReferentesDesktop'
+import { Link } from 'react-router-dom'
 
 const TAGS = ['EST. 2025', 'VALENCIA — ES', 'ARCHIVO DIGITAL', 'COMUNIDAD CREATIVA']
 
 const Landing = () => {
-  const [isSmall, setIsSmall] = useState(window.innerWidth <= 768)
+  const [isSmall, setIsSmall] = useState(window.innerWidth <= 480)
+  
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    const handleResize = () => setIsSmall(window.innerWidth <= 768)
+    const handleResize = () => setIsSmall(window.innerWidth <= 480)
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
@@ -35,10 +37,15 @@ const Landing = () => {
         <div className="relative z-0">
           <CubeGallery />
         </div>
-        <p className="font-[var(--font-secundaria)] text-[18px] text-black tracking-[-0.12em] text-center mt-12 opacity-90 max-w-[600px] relative z-30">
+        <p className="font-[var(--font-secundaria)] text-[22px] text-black tracking-[-0.12em] text-center mt-12 opacity-90 max-w-[600px] relative z-30">
           El único archivo que realmente importa.
         </p>
-        <Button href="/login">Entrar / Registrarse</Button>
+        <Link
+            to="/login">
+          <Button   size={isSmall ? 'sm' : 'md'}>
+            Entrar / Registrarse
+          </Button>
+        </Link>
       </div>
 
       {/* SECCIÓN 2 — BIO EDITORIAL */}
