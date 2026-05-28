@@ -30,7 +30,7 @@ const CookieBanner = () => {
             inset: 0,
             background: 'rgba(21, 224, 18, 0.4)',
             backdropFilter: 'blur(2px)',
-            zIndex: 9998,
+            zIndex: 9999,
         }} />
 
         {/* Banner centrado */}
