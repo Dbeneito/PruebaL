@@ -35,10 +35,10 @@ const Landing = () => {
         <div className="relative z-0">
           <CubeGallery />
         </div>
-        <p className="font-[var(--font-secundaria)] text-[22px] text-black tracking-[-0.12em] text-center mt-12 opacity-90 max-w-[600px] relative z-30">
+        <p className="font-[var(--font-secundaria)] text-[18px] text-black tracking-[-0.12em] text-center mt-12 opacity-90 max-w-[600px] relative z-30">
           El único archivo que realmente importa.
         </p>
-        <Button href="/registro">Entrar / Registrarse</Button>
+        <Button href="/login">Entrar / Registrarse</Button>
       </div>
 
       {/* SECCIÓN 2 — BIO EDITORIAL */}

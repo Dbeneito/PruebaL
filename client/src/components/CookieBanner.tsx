@@ -40,7 +40,7 @@ const CookieBanner = () => {
             left: '50%',
             transform: 'translate(-50%, -50%)',
             zIndex: 9999,
-            width: 'min(480px, 90vw)',
+            width: 'min(350px, 100vw)',
             borderRadius: '10px',
             overflow: 'hidden',
             boxShadow: '0 24px 64px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.15)',
@@ -108,13 +108,7 @@ const CookieBanner = () => {
                 LIMINAL usa cookies técnicas esenciales para mantener tu sesión activa. No usamos cookies de seguimiento ni publicidad de ningún tipo.
                 </p>
             </div>
-
-            {/* Separador */}
-            <div style={{ height: '1px', background: '#ccc' }} />
-
-            {/* Botones */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px' }}>
-                <Link
+            <Link
                 to="/cookies"
                 style={{
                     fontFamily: 'var(--font-secundaria)',
@@ -128,6 +122,9 @@ const CookieBanner = () => {
                 >
                 Más información
                 </Link>
+
+            {/* Botones */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px' }}>
                 <div style={{ display: 'flex', gap: '8px' }}>
                 <Button size="sm" color="#888" shadowColor="136,136,136" textColor="var(--negro)" onClick={reject}>
                     Rechazar
