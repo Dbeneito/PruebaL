@@ -61,7 +61,7 @@ export const macButton: React.CSSProperties = {
     transition: 'opacity 0.15s',
 }
 
-const MacWindow = ({ title, children, width = '420px', rightAction }: MacWindowProps) => {
+const MacWindow = ({ title, children, width = '420px' }: MacWindowProps) => {
     return (
         <div style={{
         width,

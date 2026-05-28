@@ -136,7 +136,7 @@ const Dashboard = () => {
         marginBottom: '4px',
     }
 
-    const CategoryButton = ({ id, label, active, onClick }: any) => (
+    const CategoryButton = ({ label, active, onClick }: any) => (
         <button
         onClick={onClick}
         style={{
